@@ -58,6 +58,8 @@ install_common_packages_macos() {
     bat \
     zoxide \
     eza \
+    zsh-autosuggestions \
+    zsh-syntax-highlighting \
     jq \
     unzip \
     file-formula \
@@ -119,6 +121,8 @@ install_common_packages_linux() {
     tmux \
     zsh \
     eza \
+    zsh-autosuggestions \
+    zsh-syntax-highlighting \
     locales
 
   apt_install_optional \
