@@ -30,12 +30,3 @@ if command -v brew >/dev/null 2>&1; then
 fi
 [[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
   source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-# ------------------------------
-# zsh-syntax-highlighting (must be last)
-# ------------------------------
-if command -v brew >/dev/null 2>&1; then
-  [[ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
-    source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
-[[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
-  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
