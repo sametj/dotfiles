@@ -1,0 +1,15 @@
+format = "$os$username$directory$git_branch$git_status$cmd_duration$line_break$character"
+
+[os]
+disabled = false
+
+[directory]
+truncation_length = 3
+truncate_to_repo  = true
+
+[git_branch]
+symbol = " "
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol   = "[❯](red)"
