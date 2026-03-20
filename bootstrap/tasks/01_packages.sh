@@ -40,6 +40,26 @@ install_lazygit_linux_release() {
   log "[packages] lazygit installed at $HOME/.local/bin/lazygit"
 }
 
+install_eza_linux() {
+  if has_cmd eza; then
+    log "[packages] eza already installed"
+    return
+  fi
+
+  log "[packages] Installing eza..."
+  need_cmd curl
+
+  # eza isn't in standard Ubuntu apt — install via their official method
+  sudo mkdir -p /etc/apt/keyrings
+  curl -fsSL https://raw.githubusercontent.com/eza-community/eza/main/deb.asc \
+    | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+  echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" \
+    | sudo tee /etc/apt/sources.list.d/gierens.list
+  sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+  sudo apt-get update -qq
+  sudo apt-get install -y eza
+}
+
 install_common_packages_macos() {
   log "[packages] Installing common packages on macOS..."
 
@@ -60,17 +80,18 @@ install_common_packages_macos() {
     eza \
     zsh-autosuggestions \
     zsh-syntax-highlighting \
+    zsh-vi-mode \
     jq \
     unzip \
-    file-formula \
     poppler \
     p7zip \
     imagemagick \
     ffmpegthumbnailer \
-    python \
+    python3 \
     pipx \
     yazi \
-    lazygit
+    lazygit \
+    git-delta
 
   if brew install tree-sitter; then
     log "[packages] Optional package install succeeded: tree-sitter"
@@ -80,7 +101,6 @@ install_common_packages_macos() {
 }
 
 apt_install_optional() {
-  # apt_install_optional <package> [package ...]
   if sudo apt-get install -y "$@"; then
     log "[packages] Optional package install succeeded: $*"
   else
@@ -120,9 +140,6 @@ install_common_packages_linux() {
     pipx \
     tmux \
     zsh \
-    eza \
-    zsh-autosuggestions \
-    zsh-syntax-highlighting \
     locales
 
   apt_install_optional \
@@ -131,9 +148,14 @@ install_common_packages_linux() {
     fd-find \
     bat \
     zoxide \
-    git-delta
+    git-delta \
+    zsh-autosuggestions \
+    zsh-syntax-highlighting
 
   apt_install_optional tree-sitter-cli
+
+  # eza needs a separate repo on Ubuntu
+  install_eza_linux
 
   mkdir -p "$HOME/.local/bin"
 
@@ -150,7 +172,7 @@ install_common_packages_linux() {
   if command -v lazygit >/dev/null 2>&1; then
     log "[packages] lazygit already installed: $(command -v lazygit)"
   else
-    if sudo apt-get install -y lazygit; then
+    if sudo apt-get install -y lazygit 2>/dev/null; then
       log "[packages] lazygit installed via apt"
     else
       warn "[packages] lazygit not available via apt; falling back to GitHub release"

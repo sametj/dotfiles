@@ -1,4 +1,6 @@
+# ------------------------------
 # zsh-autosuggestions
+# ------------------------------
 if command -v brew >/dev/null 2>&1; then
   [[ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
     source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
@@ -6,7 +8,20 @@ fi
 [[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
   source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# zsh-syntax-highlighting — MUST be sourced last
+# ------------------------------
+# zsh-vi-mode (must load before syntax highlighting)
+# ------------------------------
+if command -v brew >/dev/null 2>&1; then
+  [[ -f "$(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh" ]] && \
+    source "$(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh"
+fi
+# Linux (cloned manually by 15_zsh.sh)
+[[ -f "$HOME/.zsh-vi-mode/zsh-vi-mode.plugin.zsh" ]] && \
+  source "$HOME/.zsh-vi-mode/zsh-vi-mode.plugin.zsh"
+
+# ------------------------------
+# zsh-syntax-highlighting (MUST be last)
+# ------------------------------
 if command -v brew >/dev/null 2>&1; then
   [[ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
     source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"

@@ -8,19 +8,18 @@ nvm_latest_tag() {
   need_cmd git
 
   local latest_tag
-  latest_tag="$(git ls-remote --tags --refs https://github.com/nvm-sh/nvm.git 'v[0-9]*' | awk -F/ '{print $3}' | sort -V | tail -n1)"
+  latest_tag="$(git ls-remote --tags --refs https://github.com/nvm-sh/nvm.git 'v[0-9]*' \
+    | awk -F/ '{print $3}' | sort -V | tail -n1)"
 
   [[ -n "$latest_tag" ]] || die "[nvm] Could not determine latest nvm tag from upstream."
-
-  printf '%s
-' "$latest_tag"
+  printf '%s\n' "$latest_tag"
 }
 
 nvm_task() {
   log "[nvm] Installing nvm + Node LTS + pnpm..."
 
   has_cmd curl || die "[nvm] curl is required but not installed."
-  has_cmd git || die "[nvm] git is required but not installed."
+  has_cmd git  || die "[nvm] git is required but not installed."
 
   local latest_tag
   latest_tag="$(nvm_latest_tag)"
@@ -48,27 +47,12 @@ nvm_task() {
     corepack enable
     corepack prepare pnpm@latest --activate
   else
-    warn "[nvm] corepack not found; falling back to npm global install for pnpm..."
+    warn "[nvm] corepack not found; falling back to npm install for pnpm..."
     npm install -g pnpm
   fi
 
-  local root confdir nvm_conf
-  root="$(repo_root)"
-  confdir="$root/apps/zsh/files/.config/zsh/conf.d"
-  nvm_conf="$confdir/45-node.zsh"
-
-  mkdir -p "$confdir"
-
-  cat >"$nvm_conf" <<'ZSH'
-# NVM (Node Version Manager)
-export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
-
-if command -v nvm >/dev/null 2>&1; then
-  nvm use --silent default >/dev/null 2>&1 || true
-fi
-ZSH
-
+  # NOTE: nvm config lives in apps/zsh/files/.config/zsh/conf.d/50-node.zsh
+  # No need to write a separate file here — 50-node.zsh is already tracked.
   log "[nvm] node: $(node -v)"
   log "[nvm] npm:  $(npm -v)"
   log "[nvm] pnpm: $(pnpm -v)"

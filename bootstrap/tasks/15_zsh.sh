@@ -17,7 +17,7 @@ install_starship() {
     ;;
   linux | wsl)
     log "[zsh] Installing starship..."
-    if sudo apt-get install -y starship; then
+    if sudo apt-get install -y starship 2>/dev/null; then
       log "[zsh] starship installed via apt"
     else
       warn "[zsh] starship not available via apt; using official install script"
@@ -27,6 +27,27 @@ install_starship() {
     ;;
   *)
     die "[zsh] Unsupported platform for starship install: ${PLATFORM:-unset}"
+    ;;
+  esac
+}
+
+install_zsh_vi_mode_linux() {
+  if [[ -d "$HOME/.zsh-vi-mode" ]]; then
+    log "[zsh] zsh-vi-mode already installed."
+    return
+  fi
+  log "[zsh] Installing zsh-vi-mode..."
+  git clone https://github.com/jeffreytse/zsh-vi-mode.git "$HOME/.zsh-vi-mode"
+}
+
+install_zsh_plugins() {
+  case "${PLATFORM:-}" in
+  macos)
+    # installed via 01_packages.sh (brew)
+    log "[zsh] zsh plugins installed via Homebrew."
+    ;;
+  linux | wsl)
+    install_zsh_vi_mode_linux
     ;;
   esac
 }
@@ -53,13 +74,14 @@ set_default_shell_zsh() {
 main() {
   ensure_supported_platform
 
-  log "[zsh] Configuring zsh + starship..."
+  log "[zsh] Configuring zsh + starship + plugins..."
 
-  has_cmd zsh || die "[zsh] zsh is required but not installed."
-  has_cmd git || die "[zsh] git is required but not installed."
+  has_cmd zsh  || die "[zsh] zsh is required but not installed."
+  has_cmd git  || die "[zsh] git is required but not installed."
   has_cmd curl || die "[zsh] curl is required but not installed."
 
   install_starship
+  install_zsh_plugins
   symlink_zshrc
   set_default_shell_zsh
 
