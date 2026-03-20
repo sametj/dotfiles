@@ -71,8 +71,32 @@ ensure_stow() {
   esac
 }
 
+pre_stow_clean() {
+  # Remove any existing symlinks at the target paths so stow can own them.
+  # Never removes real files — only symlinks.
+  local app="$1"
+  local root; root="$(repo_root)"
+  local files_dir="$root/apps/$app/files"
+
+  [[ -d "$files_dir" ]] || return 0
+
+  while IFS= read -r -d '' src; do
+    [[ -f "$src" ]] || continue
+
+    local rel="${src#"$files_dir"/}"
+
+    # translate dot- prefix → .filename (mirrors stow --dotfiles behaviour)
+    local dest_rel
+    dest_rel="$(echo "$rel" | sed 's|/dot-|/.|g; s|^dot-|.|')"
+    local dest="$HOME/$dest_rel"
+
+    if [[ -L "$dest" ]]; then
+      rm -f "$dest"
+    fi
+  done < <(find "$files_dir" -type f -print0)
+}
+
 stow_app() {
-  # stow_app <app> [--delete|--restow]
   local app="$1"
   local action="${2:---restow}"
   local root; root="$(repo_root)"
@@ -82,9 +106,12 @@ stow_app() {
 
   ensure_stow
 
+  # Clean up any existing symlinks so stow can take ownership
+  if [[ "$action" != "--delete" ]]; then
+    pre_stow_clean "$app"
+  fi
+
   log "Stowing app: $app ($action)"
-  # --dir points at apps/<app> so stow sees "files" as the package
-  # --dotfiles renames dot-foo -> .foo on link
   stow \
     --dir="$root/apps/$app" \
     --target="$HOME" \
@@ -95,7 +122,7 @@ stow_app() {
 
 unstow_app() { stow_app "$1" --delete; }
 
-# Backward-compatible aliases — tasks not yet updated still work
+# Backward-compatible aliases
 link_app_files() { stow_app "$1"; }
 stow_package()   { stow_app "$1"; }
 
