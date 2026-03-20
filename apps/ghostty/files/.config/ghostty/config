@@ -1,7 +1,6 @@
-# macOS only — bootstrapped by bootstrap.sh, not install.sh
 # Font
-font-family = "JetBrainsMono Nerd Font"
-font-size = 16
+font-family = JetBrainsMono Nerd Font
+font-size = 14
 
 # Window
 window-padding-x = 10
@@ -10,10 +9,10 @@ window-decoration = true
 
 # Cursor
 cursor-style = block
-cursor-blink = true
+cursor-style-blink = true
 
 # Theme
-theme = catppuccin-mocha
+theme = Catppuccin Frappe
 
 # Scrollback
 scrollback-limit = 100000
@@ -21,11 +20,8 @@ scrollback-limit = 100000
 # Copy / Paste
 copy-on-select = true
 
-# Performance
-vsync = false
-
 # macOS specific
 macos-option-as-alt = true
 
 # Shell integration
-shell-integration = true
+shell-integration = zsh
