@@ -52,22 +52,11 @@ opt.foldtext = ""
 opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
 opt.wildmode = "longest:full,full"
 
-if vim.fn.has("mac") == 1 then
-  opt.fillchars = {
-    foldopen  = "",
-    foldclose = "",
-    fold      = " ",
-    foldsep   = " ",
-    diff      = "╱",
-    eob       = " ",
-  }
-else
-  opt.fillchars = {
-    foldopen  = "▾",
-    foldclose = "▸",
-    fold      = " ",
-    foldsep   = " ",
-    diff      = "╱",
-    eob       = " ",
-  }
-end
+opt.fillchars = {
+  foldopen  = "▾",
+  foldclose = "▸",
+  fold      = " ",
+  foldsep   = " ",
+  diff      = "╱",
+  eob       = " ",
+}
