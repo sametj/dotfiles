@@ -16,6 +16,7 @@ return {
 				-- high-level groups
 				{ "<leader><tab>", group = "tabs" },
 				{ "<leader>b", group = "buffer" },
+				{ "<leader>B", group = "brain" },
 				{ "<leader>c", group = "code" },
 				{ "<leader>d", group = "debug" },
 				{ "<leader>f", group = "find/file" },
