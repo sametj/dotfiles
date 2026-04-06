@@ -1,13 +1,6 @@
 # ------------------------------
 # Tool integration / fixes
 # ------------------------------
-# Ubuntu naming fixes
-if command -v fdfind >/dev/null 2>&1 && ! command -v fd >/dev/null 2>&1; then
-  alias fd='fdfind'
-fi
-if command -v batcat >/dev/null 2>&1 && ! command -v bat >/dev/null 2>&1; then
-  alias bat='batcat'
-fi
 # fzf keybindings + completion
 if command -v brew >/dev/null 2>&1; then
   FZF_PREFIX="$(brew --prefix fzf 2>/dev/null)"

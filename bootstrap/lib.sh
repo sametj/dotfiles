@@ -118,6 +118,21 @@ stow_app() {
     --dotfiles \
     "$action" \
     files
+
+  # Verify at least one symlink was created (skip for --delete)
+  if [[ "$action" != "--delete" ]]; then
+    local linked=0
+    while IFS= read -r -d '' src; do
+      [[ -f "$src" ]] || continue
+      local rel="${src#"$app_files"/}"
+      local dest_rel
+      dest_rel="$(echo "$rel" | sed 's|/dot-|/.|g; s|^dot-|.|')"
+      [[ -L "$HOME/$dest_rel" ]] && linked=$((linked + 1))
+    done < <(find "$app_files" -type f -print0)
+    if (( linked == 0 )); then
+      warn "stow_app: no symlinks found after stowing '$app' — check for conflicts"
+    fi
+  fi
 }
 
 unstow_app() { stow_app "$1" --delete; }

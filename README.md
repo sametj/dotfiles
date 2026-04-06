@@ -12,6 +12,7 @@ Personal development environment for macOS and Linux/WSL. Managed with [GNU Stow
 | git | `~/.gitconfig`, `~/.config/git/gitignore_global` |
 | ghostty | `~/.config/ghostty/config` |
 | starship | `~/.config/starship.toml` |
+| bin | `~/.local/bin/` — brain-* scripts and other utilities |
 
 ## Quick start
 
@@ -19,7 +20,7 @@ Personal development environment for macOS and Linux/WSL. Managed with [GNU Stow
 
 ```bash
 # 1. Run bootstrap (installs Xcode CLI tools, Homebrew, Ghostty, all tools, then stows configs)
-git clone https://github.com/sametj/dotfiles.git ~/.dotfiles
+git clone https://github.com/sametj/dotfiles-2026.git ~/.dotfiles
 ~/.dotfiles/bootstrap.sh
 ```
 
@@ -32,14 +33,14 @@ git clone https://github.com/sametj/dotfiles.git ~/.dotfiles
 
 ```bash
 # 2. After Ubuntu finishes first-run setup, inside the Ubuntu terminal
-git clone https://github.com/sametj/dotfiles.git ~/.dotfiles
+git clone https://github.com/sametj/dotfiles-2026.git ~/.dotfiles
 ~/.dotfiles/bootstrap/install.sh
 ```
 
 ### Existing machine (git + zsh already installed)
 
 ```bash
-git clone https://github.com/sametj/dotfiles.git ~/.dotfiles
+git clone https://github.com/sametj/dotfiles-2026.git ~/.dotfiles
 ~/.dotfiles/bootstrap/install.sh
 ```
 
@@ -66,6 +67,7 @@ EOF
 ```
 .
 ├── apps/                     # one folder per app
+│   ├── bin/files/            # ~/.local/bin scripts (brain-*, etc.)
 │   ├── git/files/            # mirrors $HOME — stowed directly
 │   ├── ghostty/files/
 │   ├── nvim/files/
@@ -80,6 +82,7 @@ EOF
 │       ├── 01_packages.sh
 │       ├── 02_git.sh
 │       ├── 03_ssh.sh
+│       ├── 04_ghostty.sh
 │       ├── 05_yazi.sh
 │       ├── 10_tmux.sh
 │       ├── 15_zsh.sh
@@ -87,7 +90,8 @@ EOF
 │       ├── 25_nvm.sh
 │       ├── 30_python_cli.sh
 │       ├── 35_dotnet.sh
-│       └── 40_netcoredbg.sh
+│       ├── 40_netcoredbg.sh
+│       └── 50_brain.sh
 ├── bootstrap.sh              # macOS entry point
 ├── bootstrap.ps1             # Windows entry point
 └── .stowrc                   # --target=$HOME --dotfiles
@@ -170,6 +174,18 @@ source ~/.dotfiles/bootstrap/lib.sh && detect_platform && unstow_app myapp
 ```
 
 This only removes symlinks — your dotfiles repo is untouched.
+
+## Brain / second-brain system
+
+The `brain-project` command scaffolds a new project under `~/brain/projects/`:
+
+```bash
+brain-project my-project
+# creates ~/brain/projects/my-project/{index,tasks,design,bugs,ideas,decisions}.md
+# then cd's into the directory and opens index.md in nvim
+```
+
+Each project gets a standard set of markdown files (`index.md`, `tasks.md`, `design.md`, `bugs.md`, `ideas.md`, `decisions.md`) ready for use with Obsidian or any markdown editor.
 
 ## Tools installed
 
