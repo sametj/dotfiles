@@ -39,26 +39,27 @@ return {
 				[" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
 				["x"] = { char = "", hl_group = "ObsidianDone" },
 			},
-			note_id_func = function(title)
-				local suffix = ""
-				if title ~= nil then
-					suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
-				else
-					suffix = tostring(os.time())
-				end
-				return os.date("%Y-%m-%d") .. "-" .. suffix
-			end,
-
-			note_frontmatter_func = function(note)
-				local out = { id = note.id, title = note.title, date = os.date("%Y-%m-%d"), tags = note.tags }
-				if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
-					for k, v in pairs(note.metadata) do
-						out[k] = v
-					end
-				end
-				return out
-			end,
 		},
+
+		note_id_func = function(title)
+			local suffix = ""
+			if title ~= nil then
+				suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+			else
+				suffix = tostring(os.time())
+			end
+			return os.date("%Y-%m-%d") .. "-" .. suffix
+		end,
+
+		note_frontmatter_func = function(note)
+			local out = { id = note.id, title = note.title, date = os.date("%Y-%m-%d"), tags = note.tags }
+			if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+				for k, v in pairs(note.metadata) do
+					out[k] = v
+				end
+			end
+			return out
+		end,
 
 		follow_url_func = function(url)
 			vim.fn.jobstart({ "open", url })

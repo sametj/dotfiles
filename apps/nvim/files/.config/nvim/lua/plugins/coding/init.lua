@@ -4,4 +4,5 @@ return {
 	{ import = "plugins.coding.mini-pairs" },
 	{ import = "plugins.coding.todo-comments" },
 	{ import = "plugins.coding.dotnet-hot-reload" },
+	{ import = "plugins.coding.claude" },
 }

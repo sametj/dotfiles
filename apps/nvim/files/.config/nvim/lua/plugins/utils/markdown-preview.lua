@@ -3,7 +3,7 @@ return {
 	cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
 	ft = { "markdown" },
 	build = function()
-		vim.fn.jobstart({ "npm", "install" }, { cwd = vim.fn.stdpath("data") .. "/lazy/markdown-preview.nvim" })
+		vim.fn.jobstart({ "npm", "install" }, { cwd = vim.fn.stdpath("data") .. "/lazy/markdown-preview.nvim/app" })
 	end,
 	keys = {
 		{ "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown preview toggle" },

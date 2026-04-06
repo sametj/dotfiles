@@ -4,7 +4,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		"nvim-tree/nvim-web-devicons",
 	},
-	ft = { "markdown", "obsidian" },
+	ft = { "markdown" },
 	opts = {
 		-- headings with nice icons
 		heading = {
