@@ -59,14 +59,6 @@ return {
 			end,
 			desc = "Command History",
 		},
-		{
-			"<leader>n",
-			function()
-				Snacks.picker.notifications()
-			end,
-			desc = "Notification History",
-		},
-
 		-- find
 		{
 			"<leader>fb",
@@ -211,13 +203,6 @@ return {
 				Snacks.picker.autocmds()
 			end,
 			desc = "Autocmds",
-		},
-		{
-			"<leader>sb",
-			function()
-				Snacks.picker.lines()
-			end,
-			desc = "Buffer Lines",
 		},
 		{
 			"<leader>sc",

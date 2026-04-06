@@ -21,9 +21,8 @@ map("n", "<C-Down>",  "<cmd>resize -2<cr>",          { desc = "Decrease height" 
 map("n", "<C-Left>",  "<cmd>vertical resize -2<cr>", { desc = "Narrow width" })
 map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Widen width" })
 
-map("n", "<S-h>",      "<cmd>bprevious<cr>", { desc = "Previous buffer" })
-map("n", "<S-l>",      "<cmd>bnext<cr>",     { desc = "Next buffer" })
-map("n", "<leader>bd", "<cmd>bd<cr>",        { desc = "Delete current buffer" })
+map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
+map("n", "<S-l>", "<cmd>bnext<cr>",     { desc = "Next buffer" })
 
 map("n", "<leader>e", "<cmd>Yazi<cr>",        { desc = "Open Yazi (current file)" })
 map("n", "<leader>E", "<cmd>Yazi cwd<cr>",    { desc = "Open Yazi (cwd)" })
@@ -49,26 +48,3 @@ map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Show diagnostics und
 
 map("n", "+", "<C-a>")
 map("n", "-", "<C-x>")
-
-local function get_root()
-	local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
-	if vim.v.shell_error == 0 and git_root ~= "" then return git_root end
-	return vim.fn.getcwd()
-end
-
-local function open_terminal_in_root()
-	require("snacks.terminal")(nil, { size = { width = 0.85, height = 0.85 }, cwd = get_root() })
-end
-
-local function open_terminal_in_cwd()
-	require("snacks.terminal")(nil, { size = { width = 0.85, height = 0.85 }, cwd = vim.fn.getcwd() })
-end
-
-map("n", "<leader>ft", open_terminal_in_root, { desc = "Terminal (Project Root)" })
-map("n", "<leader>fT", open_terminal_in_cwd,  { desc = "Terminal (CWD)" })
-map("n", "<C-/>",  open_terminal_in_root, { desc = "Toggle Terminal (Root)" })
-map("t", "<C-/>",  "<cmd>close<cr>",      { desc = "Hide Terminal" })
-map("n", "<C-_>",  open_terminal_in_root, { desc = "Toggle Terminal (Root)" })
-map("t", "<C-_>",  "<cmd>close<cr>",      { desc = "Hide Terminal" })
-map("n", "<C-\\>", open_terminal_in_root, { desc = "Toggle Terminal (Root)" })
-map("t", "<C-\\>", "<cmd>close<cr>",      { desc = "Hide Terminal" })

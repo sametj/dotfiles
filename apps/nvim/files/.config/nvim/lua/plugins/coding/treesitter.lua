@@ -26,6 +26,7 @@ return {
 			"vimdoc",
 			"c_sharp",
 			"bicep",
+			"tsx",
 		},
 		auto_install = true,
 	},

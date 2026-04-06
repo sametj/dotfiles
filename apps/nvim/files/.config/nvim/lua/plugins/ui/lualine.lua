@@ -1,4 +1,3 @@
--- ~/.config/nvim/lua/plugins/ui/lualine.lua
 local formatter = function()
 	local ok, conform = pcall(require, "conform")
 	if not ok then
@@ -29,21 +28,10 @@ return {
 	event = "VeryLazy",
 
 	opts = function()
-		-- 🧩 LSP client name helper
 		local function lsp_name()
-			local msg = "No LSP"
-			local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-			local clients = vim.lsp.get_clients()
-			if next(clients) == nil then
-				return msg
-			end
-			for _, client in ipairs(clients) do
-				local filetypes = client.config.filetypes
-				if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-					return " " .. client.name
-				end
-			end
-			return msg
+			local clients = vim.lsp.get_clients({ bufnr = 0 })
+			if #clients == 0 then return "No LSP" end
+			return " " .. clients[1].name
 		end
 
 		return {
@@ -51,15 +39,14 @@ return {
 				theme = "auto",
 				globalstatus = true,
 				icons_enabled = true,
-				component_separators = { left = "", right = "" },
-				section_separators = { left = "", right = "" },
+				component_separators = { left = "", right = "" },
+				section_separators = { left = "", right = "" },
 				disabled_filetypes = { "alpha", "dashboard", "snacks_dashboard", "neo-tree", "lazy" },
 			},
 
 			sections = {
-				-- left bubble
-				lualine_a = { { "mode", icon = "" } },
-				lualine_b = { { "branch", icon = "" } },
+				lualine_a = { { "mode", icon = "" } },
+				lualine_b = { { "branch", icon = "" } },
 
 				lualine_c = {
 					{
@@ -71,22 +58,21 @@ return {
 					{
 						"filename",
 						path = 1,
-						symbols = { modified = "", readonly = "" },
+						symbols = { modified = "", readonly = "" },
 					},
 					{
 						"diagnostics",
-						symbols = { error = " ", warn = " ", info = " ", hint = " " },
+						symbols = { error = " ", warn = " ", info = " ", hint = " " },
 					},
 				},
 
-				-- right section (like LazyVim’s)
 				lualine_x = {
-					formatter, -- 󰛖  shows if Conform has a formatter
-					linter, -- 󱉶  shows if nvim-lint has a linter
-					{ lsp_name }, -- LSP client name
+					formatter,
+					linter,
+					{ lsp_name },
 					{
 						"diff",
-						symbols = { added = " ", modified = " ", removed = " " },
+						symbols = { added = " ", modified = " ", removed = " " },
 						source = function()
 							local gitsigns = vim.b.gitsigns_status_dict
 							if gitsigns then
@@ -108,9 +94,7 @@ return {
 				lualine_z = {
 					{ "location", separator = "" },
 					{
-						function()
-							return ""
-						end,
+						function() return "" end,
 						padding = { left = 0, right = 1 },
 					},
 				},
@@ -131,8 +115,6 @@ return {
 
 	config = function(_, opts)
 		require("lualine").setup(opts)
-
-		-- Transparent background (for Kanagawa / Catppuccin)
 		vim.api.nvim_set_hl(0, "StatusLine", { bg = "none" })
 		vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "none" })
 	end,

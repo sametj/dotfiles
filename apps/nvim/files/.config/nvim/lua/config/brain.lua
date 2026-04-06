@@ -1,5 +1,9 @@
 -- Brain: project + fitness commands
 
+local function last_line(output)
+	return vim.trim(output):match("[^\n]+$") or ""
+end
+
 local function create_brain_project()
 	vim.ui.input({ prompt = "Project name: " }, function(input)
 		if not input or vim.trim(input) == "" then
@@ -10,8 +14,8 @@ local function create_brain_project()
 			vim.notify("Failed:\n" .. result, vim.log.levels.ERROR)
 			return
 		end
-		local dir = vim.trim(result)
-		vim.notify("Project created: " .. dir, vim.log.levels.INFO)
+		local dir = last_line(result)
+		vim.notify("Project: " .. dir, vim.log.levels.INFO)
 		vim.cmd("edit " .. vim.fn.fnameescape(dir .. "/index.md"))
 	end)
 end
@@ -41,8 +45,8 @@ local function create_workout_plan()
 			vim.notify("Failed:\n" .. result, vim.log.levels.ERROR)
 			return
 		end
-		local dir = vim.trim(result)
-		vim.notify("Workout created: " .. dir, vim.log.levels.INFO)
+		local dir = last_line(result)
+		vim.notify("Workout: " .. dir, vim.log.levels.INFO)
 		vim.cmd("edit " .. vim.fn.fnameescape(dir .. "/plan.md"))
 	end)
 end
@@ -57,7 +61,7 @@ local function log_workout_session()
 			vim.notify("Failed:\n" .. result, vim.log.levels.ERROR)
 			return
 		end
-		local file = vim.trim(result)
+		local file = last_line(result)
 		vim.cmd("edit " .. vim.fn.fnameescape(file))
 		vim.cmd("normal! G")
 		vim.notify("Session logged — fill it in!", vim.log.levels.INFO)

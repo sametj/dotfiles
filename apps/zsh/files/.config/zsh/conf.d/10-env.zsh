@@ -21,6 +21,11 @@ path_add "$HOME/bin"
 # .NET
 export DOTNET_ROOT="$HOME/.dotnet"
 path_add "$DOTNET_ROOT"
+path_add "$HOME/.dotnet/tools"
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+path_add "$PNPM_HOME"
 
 # Editors
 export EDITOR="nvim"
