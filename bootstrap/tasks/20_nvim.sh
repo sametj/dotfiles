@@ -4,7 +4,7 @@ set -euo pipefail
 # shellcheck disable=SC1091
 source "$(dirname "$0")/../lib.sh"
 
-NVIM_VERSION="0.11.6"
+NVIM_VERSION="0.12.1"
 
 nvim_task() {
   ensure_supported_platform

@@ -85,7 +85,9 @@ main() {
   symlink_zshrc
   set_default_shell_zsh
 
-  log "[zsh] Done. Restart your terminal or run: exec zsh"
+  log "[zsh] Done."
+  log "[zsh] Runtimes (node, python) are managed by mise — see 25_mise.sh."
+  log "[zsh] Restart your terminal or run: exec zsh"
 }
 
 main "$@"

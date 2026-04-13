@@ -4,6 +4,8 @@ set -euo pipefail
 # shellcheck disable=SC1091
 source "$(dirname "$0")/../lib.sh"
 
+DOTNET_SDK="dotnet-sdk-10.0"
+
 install_dotnet_linux() {
   ensure_apt
   ensure_sudo
@@ -19,7 +21,8 @@ install_dotnet_linux() {
     need_cmd lsb_release
 
     log "[dotnet] Adding Microsoft package repository..."
-    wget "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb" -O /tmp/packages-microsoft-prod.deb
+    wget "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb" \
+      -O /tmp/packages-microsoft-prod.deb
     sudo dpkg -i /tmp/packages-microsoft-prod.deb
     rm -f /tmp/packages-microsoft-prod.deb
   else
@@ -28,14 +31,10 @@ install_dotnet_linux() {
 
   pkg_update
 
-  if sudo apt-get install -y dotnet-sdk-10.0; then
-    log "[dotnet] Installed dotnet-sdk-10.0"
-  elif sudo apt-get install -y dotnet-sdk-9.0; then
-    warn "[dotnet] dotnet-sdk-10.0 unavailable; installed dotnet-sdk-9.0 instead"
-  elif sudo apt-get install -y dotnet-sdk-8.0; then
-    warn "[dotnet] dotnet-sdk-10.0/9.0 unavailable; installed dotnet-sdk-8.0 instead"
+  if sudo apt-get install -y "$DOTNET_SDK"; then
+    log "[dotnet] Installed $DOTNET_SDK"
   else
-    warn "[dotnet] Failed to install .NET SDK via apt. Check Microsoft repo and Ubuntu version compatibility."
+    die "[dotnet] Failed to install $DOTNET_SDK. Ensure your Ubuntu version is supported."
   fi
 }
 
@@ -45,10 +44,10 @@ install_dotnet_macos() {
 
   log "[dotnet] Installing .NET SDK on macOS..."
 
-  if ! has_cmd dotnet; then
-    pkg_install_cask dotnet-sdk
-  else
+  if has_cmd dotnet; then
     log "[dotnet] dotnet already installed: $(command -v dotnet)"
+  else
+    pkg_install_cask dotnet-sdk
   fi
 }
 
@@ -67,7 +66,7 @@ dotnet_task() {
     ;;
   esac
 
-  log "[dotnet] Installed versions:"
+  log "[dotnet] Installed SDKs:"
   dotnet --list-sdks || true
 }
 

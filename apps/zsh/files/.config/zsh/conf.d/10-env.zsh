@@ -11,20 +11,20 @@ path_add() {
   fi
 }
 
-# Neovim in /opt (Linux install)
-path_add "/opt/nvim/bin"
-
-# User bins
+# User bins (mise installs here too)
 path_add "$HOME/.local/bin"
 path_add "$HOME/bin"
 
+# Neovim at /opt/nvim (Linux binary install)
+path_add "/opt/nvim/bin"
+
 # .NET
 export DOTNET_ROOT="$HOME/.dotnet"
-path_add "$DOTNET_ROOT"
+path_add "$HOME/.dotnet"
 path_add "$HOME/.dotnet/tools"
 
-# pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
+# pnpm (XDG-compliant, cross-platform)
+export PNPM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/pnpm"
 path_add "$PNPM_HOME"
 
 # Editors

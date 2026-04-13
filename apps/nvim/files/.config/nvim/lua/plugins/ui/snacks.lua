@@ -508,12 +508,8 @@ return {
 				end
 
 				-- Override print to use snacks for `:=` command
-				if vim.fn.has("nvim-0.11") == 1 then
-					vim._print = function(_, ...)
-						dd(...)
-					end
-				else
-					vim.print = _G.dd
+				vim._print = function(_, ...)
+					dd(...)
 				end
 
 				-- Create some toggle mappings
