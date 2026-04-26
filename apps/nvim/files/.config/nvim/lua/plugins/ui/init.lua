@@ -7,4 +7,5 @@ return {
 	{ import = "plugins.ui.mini-icon" },
 	{ import = "plugins.ui.gitsigns" },
 	{ import = "plugins.ui.yazi" },
+	{ import = "plugins.ui.colorizer" },
 }

@@ -143,6 +143,15 @@ return {
 			vim.lsp.enable(name)
 		end
 
+		vim.lsp.config["tmux_ls"] = {
+			cmd = { "tmux-language-server" },
+			filetypes = { "tmux" },
+			root_markers = { ".tmux.conf", "tmux.conf", ".git" },
+			capabilities = capabilities,
+		}
+
+		vim.lsp.enable("tmux_ls")
+
 		-- ───────────────────────────── LSP Keymaps ─────────────────────────────
 		-- gd/gD/gr are handled by Snacks picker (snacks.lua)
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -164,7 +173,7 @@ return {
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(args)
 					local client = vim.lsp.get_client_by_id(args.data.client_id)
-					if client and client.supports_method("textDocument/inlayHint") then
+					if client and client:supports_method("textDocument/inlayHint") then
 						vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
 					end
 				end,

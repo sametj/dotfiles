@@ -139,6 +139,14 @@ vim.api.nvim_create_autocmd("BufLeave", {
 	end,
 })
 
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	group = augroup("tmux_filetype"),
+	pattern = { "*/tmux/*.conf", "*/tmux/*.tmux", "*.tmux.conf", ".tmux.conf" },
+	callback = function()
+		vim.bo.filetype = "tmux"
+	end,
+})
+
 vim.api.nvim_create_autocmd("TermOpen", {
 	group = augroup("term_settings"),
 	callback = function()

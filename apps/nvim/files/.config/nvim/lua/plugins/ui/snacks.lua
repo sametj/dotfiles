@@ -1,6 +1,8 @@
 return {
 	"folke/snacks.nvim",
 	event = "VeryLazy", -- ✅ defer until UI is ready
+	lazy = false,
+	priority = 1000,
 	opts = {
 		bigfile = { enabled = true },
 		dashboard = { enabled = true },

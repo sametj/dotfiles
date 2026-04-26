@@ -39,8 +39,8 @@ return {
 				theme = "auto",
 				globalstatus = true,
 				icons_enabled = true,
-				component_separators = { left = "", right = "" },
-				section_separators = { left = "", right = "" },
+				component_separators = { left = "", right = "" },
+				section_separators = { left = "", right = "" },
 				disabled_filetypes = { "alpha", "dashboard", "snacks_dashboard", "neo-tree", "lazy" },
 			},
 
@@ -117,5 +117,25 @@ return {
 		require("lualine").setup(opts)
 		vim.api.nvim_set_hl(0, "StatusLine", { bg = "none" })
 		vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "none" })
+
+		local function make_lualine_bold()
+			local modes = { "normal", "insert", "visual", "replace", "command", "inactive" }
+			local sections = { "a", "b", "c", "x", "y", "z" }
+			for _, mode in ipairs(modes) do
+				for _, section in ipairs(sections) do
+					local name = ("lualine_%s_%s"):format(section, mode)
+					local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
+					if next(hl) then
+						hl.bold = true
+						vim.api.nvim_set_hl(0, name, hl)
+					end
+				end
+			end
+		end
+
+		vim.schedule(make_lualine_bold)
+		vim.api.nvim_create_autocmd("ColorScheme", {
+			callback = function() vim.schedule(make_lualine_bold) end,
+		})
 	end,
 }
