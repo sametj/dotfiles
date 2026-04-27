@@ -83,12 +83,22 @@ install_wt_settings() {
 
   log "[wt] Found Windows Terminal settings at: $wt_settings"
 
+  local sentinel="$HOME/.local/share/dotfiles/wt-settings-installed"
+  if [[ -f "$sentinel" ]]; then
+    log "[wt] Windows Terminal settings already installed — skipping (delete $sentinel to force reinstall)."
+    return 0
+  fi
+
   # Back up existing settings
   local backup="${wt_settings}.bak.$(date +%Y%m%d%H%M%S)"
   cp "$wt_settings" "$backup"
   log "[wt] Backed up existing settings to: $backup"
 
   cp "$our_settings" "$wt_settings"
+
+  mkdir -p "$(dirname "$sentinel")"
+  touch "$sentinel"
+
   log "[wt] Installed Windows Terminal settings."
   log "[wt] Restart Windows Terminal to apply changes."
 }
