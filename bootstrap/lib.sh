@@ -116,6 +116,7 @@ stow_app() {
     --dir="$root/apps/$app" \
     --target="$HOME" \
     --dotfiles \
+    --no-folding \
     "$action" \
     files
 
