@@ -1,0 +1,40 @@
+# Nunchux Configuration
+# See docs/configuration.md for all options.
+
+[settings]
+popup_width = 90%
+popup_height = 90%
+key = g
+
+[app:lazygit]
+cmd = lazygit
+desc = Git TUI
+
+[app:neovim]
+cmd = nvim
+desc = Neovim editor
+
+[app:yazi]
+cmd = tmux new-session yazi --cwd-file={tmp} \; set status off
+desc = File manager
+
+[dirbrowser:brain]
+directory = ~/brain
+depth = 2
+sort = modified
+sort_direction = descending
+primary_action = popup
+
+[dirbrowser:dev]
+directory = ~/dev
+depth = 1
+sort = modified
+sort_direction = descending
+primary_action = popup
+
+[taskrunner:npm]
+enabled = true
+icon = 📦
+label = npm
+primary_action = window
+secondary_action = background_window

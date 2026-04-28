@@ -451,16 +451,18 @@ return {
 		{
 			"<c-/>",
 			function()
-				Snacks.terminal()
+				Snacks.terminal.toggle()
 			end,
 			desc = "Toggle Terminal",
+			mode = { "n", "i", "t" },
 		},
 		{
 			"<c-_>",
 			function()
-				Snacks.terminal()
+				Snacks.terminal.toggle()
 			end,
 			desc = "which_key_ignore",
+			mode = { "n", "i", "t" },
 		},
 		{
 			"]]",

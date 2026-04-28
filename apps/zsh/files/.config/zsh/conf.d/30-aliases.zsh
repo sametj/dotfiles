@@ -30,3 +30,6 @@ command -v lazygit >/dev/null 2>&1 && alias lzg='lazygit'
 if command -v bat >/dev/null 2>&1; then
   alias cat='bat --style=plain --paging=never'
 fi
+
+# nvim dotfiles sync
+alias nvim-sync='stow --dir ~/.dotfiles/apps/nvim --target ~ --dotfiles --no-folding --restow files'
