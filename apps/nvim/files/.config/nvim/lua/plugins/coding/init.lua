@@ -4,6 +4,7 @@ return {
 	{ import = "plugins.coding.mini-pairs" },
 	{ import = "plugins.coding.todo-comments" },
 	{ import = "plugins.coding.dotnet-hot-reload" },
+	{ import = "plugins.coding.ts-comments" },
 	{ import = "plugins.coding.claude" },
 	{ import = "plugins.coding.copilot-chat" },
 }
