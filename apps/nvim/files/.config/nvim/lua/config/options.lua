@@ -3,12 +3,12 @@ vim.g.maplocalleader = "\\"
 
 -- WSL clipboard: delegate to win32yank running on the Windows side
 if vim.fn.has("wsl") == 1 then
-  vim.g.clipboard = {
-    name  = "win32yank-wsl",
-    copy  = { ["+"] = "win32yank.exe -i --crlf", ["*"] = "win32yank.exe -i --crlf" },
-    paste = { ["+"] = "win32yank.exe -o --lf",   ["*"] = "win32yank.exe -o --lf"   },
-    cache_enabled = 0,
-  }
+	vim.g.clipboard = {
+		name = "win32yank-wsl",
+		copy = { ["+"] = "win32yank.exe -i --crlf", ["*"] = "win32yank.exe -i --crlf" },
+		paste = { ["+"] = "win32yank.exe -o --lf", ["*"] = "win32yank.exe -o --lf" },
+		cache_enabled = 0,
+	}
 end
 
 local opt = vim.opt
@@ -63,10 +63,12 @@ opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
 opt.wildmode = "longest:full,full"
 
 opt.fillchars = {
-  foldopen  = "▾",
-  foldclose = "▸",
-  fold      = " ",
-  foldsep   = " ",
-  diff      = "╱",
-  eob       = " ",
+	foldopen = "▾",
+	foldclose = "▸",
+	fold = " ",
+	foldsep = " ",
+	diff = "╱",
+	eob = " ",
 }
+
+vim.lsp.inlay_hint.enable(false)
