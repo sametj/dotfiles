@@ -18,8 +18,43 @@ return {
 		local luasnip = require("luasnip")
 		local lspkind = require("lspkind")
 
-		-- Load community snippets (JS, Python, etc.)
 		require("luasnip.loaders.from_vscode").lazy_load()
+		local kind_highlights = {
+			CmpItemKindFunction    = { fg = "#bc8cff" },
+			CmpItemKindMethod      = { fg = "#bc8cff" },
+			CmpItemKindConstructor = { fg = "#bc8cff" },
+			CmpItemKindVariable    = { fg = "#58a6ff" },
+			CmpItemKindField       = { fg = "#58a6ff" },
+			CmpItemKindProperty    = { fg = "#58a6ff" },
+			CmpItemKindClass       = { fg = "#e3b341" },
+			CmpItemKindInterface   = { fg = "#e3b341" },
+			CmpItemKindStruct      = { fg = "#e3b341" },
+			CmpItemKindEnum        = { fg = "#e3b341" },
+			CmpItemKindEnumMember  = { fg = "#79c0ff" },
+			CmpItemKindConstant    = { fg = "#ffa657" },
+			CmpItemKindKeyword     = { fg = "#f85149" },
+			CmpItemKindOperator    = { fg = "#f85149" },
+			CmpItemKindSnippet     = { fg = "#3fb950" },
+			CmpItemKindModule      = { fg = "#79c0ff" },
+			CmpItemKindReference   = { fg = "#79c0ff" },
+			CmpItemKindTypeParameter = { fg = "#e3b341" },
+			CmpItemKindText        = { fg = "#8b949e" },
+			CmpItemKindFile        = { fg = "#8b949e" },
+			CmpItemKindFolder      = { fg = "#8b949e" },
+			CmpItemKindEvent       = { fg = "#f85149" },
+			CmpItemKindColor       = { fg = "#3fb950" },
+			CmpItemKindUnit        = { fg = "#79c0ff" },
+			CmpItemKindValue       = { fg = "#79c0ff" },
+		}
+
+		local function apply_highlights()
+			for group, opts in pairs(kind_highlights) do
+				vim.api.nvim_set_hl(0, group, opts)
+			end
+		end
+
+		apply_highlights()
+		vim.api.nvim_create_autocmd("ColorScheme", { callback = apply_highlights })
 
 		cmp.setup({
 			snippet = {
@@ -58,26 +93,41 @@ return {
 			}),
 
 			formatting = {
-				format = lspkind.cmp_format({
-					mode = "symbol_text",
-					maxwidth = 50,
-					ellipsis_char = "...",
-					menu = {
-						nvim_lsp = "[LSP]",
-						luasnip = "[Snip]",
-						buffer = "[Buf]",
-						path = "[Path]",
-					},
-				}),
+				fields = { "kind", "abbr", "menu" },
+				format = function(entry, vim_item)
+					local kind = lspkind.cmp_format({ mode = "symbol_text", maxwidth = 40 })(entry, vim_item)
+					local parts = vim.split(kind.kind, "%s", { trimempty = true })
+					kind.kind = " " .. (parts[1] or "") .. " "
+					local source_icons = {
+						nvim_lsp = "󰒕",
+						luasnip = "",
+						buffer = "󰦨",
+						path = "",
+					}
+					kind.menu = " " .. (source_icons[entry.source.name] or "?") .. "  " .. (parts[2] or "")
+					return kind
+				end,
 			},
 
 			window = {
-				completion = cmp.config.window.bordered(),
-				documentation = cmp.config.window.bordered(),
+				completion = cmp.config.window.bordered({
+					border = "rounded",
+					winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+					col_offset = -3,
+					side_padding = 0,
+				}),
+				documentation = cmp.config.window.bordered({
+					border = "rounded",
+					winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
+				}),
+			},
+
+			view = {
+				entries = { name = "custom", selection_order = "near_cursor" },
 			},
 
 			experimental = {
-				ghost_text = true, -- subtle inline hint
+				ghost_text = false, -- subtle inline hint
 			},
 		})
 	end,

@@ -4,15 +4,15 @@ Personal development environment for macOS and Linux/WSL. Managed with [GNU Stow
 
 ## What's included
 
-| App | Config location |
-|-----|----------------|
-| zsh | `~/.zshrc`, `~/.config/zsh/conf.d/` |
-| neovim | `~/.config/nvim/` |
-| tmux | `~/.tmux.conf`, `~/.config/tmux/` |
-| git | `~/.gitconfig`, `~/.config/git/gitignore_global` |
-| ghostty | `~/.config/ghostty/config` |
-| starship | `~/.config/starship.toml` |
-| bin | `~/.local/bin/` — brain-* scripts and other utilities |
+| App      | Config location                                        |
+| -------- | ------------------------------------------------------ |
+| zsh      | `~/.zshrc`, `~/.config/zsh/conf.d/`                    |
+| neovim   | `~/.config/nvim/`                                      |
+| tmux     | `~/.tmux.conf`, `~/.config/tmux/`                      |
+| git      | `~/.gitconfig`, `~/.config/git/gitignore_global`       |
+| ghostty  | `~/.config/ghostty/config`                             |
+| starship | `~/.config/starship.toml`                              |
+| bin      | `~/.local/bin/` — brain-\* scripts and other utilities |
 
 ## Quick start
 
@@ -20,7 +20,8 @@ Personal development environment for macOS and Linux/WSL. Managed with [GNU Stow
 
 ```bash
 # 1. Run bootstrap (installs Xcode CLI tools, Homebrew, Ghostty, all tools, then stows configs)
-git clone https://github.com/sametj/dotfiles-2026.git ~/.dotfiles
+git clone https://github.com/sametj/dotfiles.git ~/.dotfiles
+
 ~/.dotfiles/bootstrap.sh
 ```
 
@@ -189,20 +190,20 @@ Each project gets a standard set of markdown files (`index.md`, `tasks.md`, `des
 
 ## Tools installed
 
-| Tool | Purpose |
-|------|---------|
-| zsh + starship | shell + prompt |
-| neovim | editor |
+| Tool              | Purpose              |
+| ----------------- | -------------------- |
+| zsh + starship    | shell + prompt       |
+| neovim            | editor               |
 | tmux + catppuccin | terminal multiplexer |
-| eza | modern `ls` |
-| bat | modern `cat` |
-| fd | modern `find` |
-| ripgrep | fast grep |
-| fzf | fuzzy finder |
-| zoxide | smart `cd` |
-| lazygit | git TUI |
-| yazi | file manager |
-| nvm | Node version manager |
-| delta | git diff pager |
-| .NET SDK | C# development |
-| netcoredbg | .NET debugger |
+| eza               | modern `ls`          |
+| bat               | modern `cat`         |
+| fd                | modern `find`        |
+| ripgrep           | fast grep            |
+| fzf               | fuzzy finder         |
+| zoxide            | smart `cd`           |
+| lazygit           | git TUI              |
+| yazi              | file manager         |
+| nvm               | Node version manager |
+| delta             | git diff pager       |
+| .NET SDK          | C# development       |
+| netcoredbg        | .NET debugger        |
