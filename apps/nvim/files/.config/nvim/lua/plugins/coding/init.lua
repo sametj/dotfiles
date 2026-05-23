@@ -6,4 +6,5 @@ return {
 	{ import = "plugins.coding.dotnet-hot-reload" },
 	{ import = "plugins.coding.claude" },
 	{ import = "plugins.coding.copilot-chat" },
+	{ import = "plugins.coding.comment" },
 }

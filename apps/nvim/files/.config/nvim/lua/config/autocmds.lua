@@ -2,6 +2,14 @@ local function augroup(name)
 	return vim.api.nvim_create_augroup("user_" .. name, { clear = true })
 end
 
+-- Start treesitter for any filetype that has a parser installed
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup("treesitter_start"),
+	callback = function(ev)
+		pcall(vim.treesitter.start, ev.buf)
+	end,
+})
+
 -- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 	group = augroup("checktime"),

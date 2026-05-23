@@ -1,15 +1,10 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
-	event = { "BufReadPost", "BufNewFile" },
-
-	-- correct module in your installed version
-	main = "nvim-treesitter.config",
-
-	opts = {
-		highlight = { enable = true },
-		indent = { enable = true },
-		ensure_installed = {
+	lazy = false,
+	config = function()
+		require("nvim-treesitter").setup()
+		require("nvim-treesitter.install").install({
 			"vim",
 			"lua",
 			"vimdoc",
@@ -23,11 +18,12 @@ return {
 			"yaml",
 			"toml",
 			"dockerfile",
-			"vimdoc",
 			"c_sharp",
 			"bicep",
 			"tsx",
-		},
-		auto_install = true,
-	},
+			"regex",
+			"markdown",
+			"markdown_inline",
+		})
+	end,
 }

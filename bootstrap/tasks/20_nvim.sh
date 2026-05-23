@@ -6,6 +6,20 @@ source "$(dirname "$0")/../lib.sh"
 
 NVIM_VERSION="0.12.1"
 
+ensure_tree_sitter_cli() {
+  if has_cmd tree-sitter; then
+    log "[nvim] tree-sitter-cli already installed: $(tree-sitter --version 2>/dev/null || true)"
+    return 0
+  fi
+
+  if has_cmd npm; then
+    log "[nvim] Installing tree-sitter-cli via npm..."
+    npm install -g tree-sitter-cli
+  else
+    warn "[nvim] npm not found — skipping tree-sitter-cli. Run manually: npm install -g tree-sitter-cli"
+  fi
+}
+
 nvim_task() {
   ensure_supported_platform
 
@@ -70,6 +84,9 @@ nvim_task() {
     die "[nvim] Unsupported platform: ${PLATFORM:-unset}"
     ;;
   esac
+
+  log "[nvim] Installing tree-sitter-cli..."
+  ensure_tree_sitter_cli
 
   log "[nvim] Linking config..."
   stow_app "nvim"
