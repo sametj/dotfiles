@@ -90,6 +90,15 @@ pre_stow_clean() {
     dest_rel="$(echo "$rel" | sed 's|/dot-|/.|g; s|^dot-|.|')"
     local dest="$HOME/$dest_rel"
 
+    # Remove broken directory symlinks along the path so stow can create real dirs
+    local part="$HOME"
+    while IFS= read -r component; do
+      part="$part/$component"
+      if [[ -L "$part" && ! -e "$part" ]]; then
+        rm -f "$part"
+      fi
+    done < <(echo "$dest_rel" | tr '/' '\n')
+
     if [[ -L "$dest" ]]; then
       rm -f "$dest"
     fi

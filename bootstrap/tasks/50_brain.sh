@@ -6,9 +6,6 @@ source "$(dirname "$0")/../lib.sh"
 brain_task() {
   log "[brain] Setting up second brain..."
 
-  # stow bin scripts
-  stow_app "bin"
-
   # create vault structure if missing
   mkdir -p "$HOME/brain/"{inbox,daily,projects,areas/fitness/{workout-plans,templates},resources,archive,templates}
 
