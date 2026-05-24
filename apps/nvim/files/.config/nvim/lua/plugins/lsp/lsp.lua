@@ -73,9 +73,23 @@ return {
 
 			vtsls = {
 				settings = {
+					vtsls = {
+						autoUseWorkspaceTsdk = true,
+						experimental = {
+							completion = {
+								enableServerSideFuzzyMatch = true,
+							},
+						},
+					},
 					typescript = {
 						tsserver = {
 							maxTsServerMemory = 8192,
+						},
+						suggest = {
+							autoImports = true,
+						},
+						updateImportsOnFileMove = {
+							enabled = "always",
 						},
 						inlayHints = {
 							parameterNames = { enabled = "false" },
@@ -84,6 +98,14 @@ return {
 							propertyDeclarationTypes = { enabled = false },
 							functionLikeReturnTypes = { enabled = false },
 							enumMemberValues = { enabled = false },
+						},
+					},
+					javascript = {
+						suggest = {
+							autoImports = true,
+						},
+						updateImportsOnFileMove = {
+							enabled = "always",
 						},
 					},
 				},
