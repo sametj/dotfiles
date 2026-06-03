@@ -27,6 +27,9 @@ path_add "$HOME/.dotnet/tools"
 export PNPM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/pnpm"
 path_add "$PNPM_HOME"
 
+# Rokit (Roblox toolchain manager, successor to Aftman)
+path_add "$HOME/.rokit/bin"
+
 # Editors
 export EDITOR="nvim"
 export VISUAL="nvim"

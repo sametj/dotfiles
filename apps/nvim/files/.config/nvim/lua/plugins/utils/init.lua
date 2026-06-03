@@ -3,4 +3,5 @@ return {
 	{ import = "plugins.utils.obsidian" },
 	{ import = "plugins.utils.render-markdown" },
 	{ import = "plugins.utils.markdown-preview" },
+	{ import = "plugins.utils.schemastore" },
 }
