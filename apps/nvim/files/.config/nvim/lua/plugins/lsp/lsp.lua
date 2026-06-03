@@ -15,6 +15,14 @@ return {
 
 		-- ─────────────────────────────── Servers ───────────────────────────────
 		local servers = {
+			jsonls = {
+				settings = {
+					json = {
+						schemas = require("schemastore").json.schemas(),
+						validate = { enable = true },
+					},
+				},
+			},
 			lua_ls = {
 				root_dir = function(fname)
 					local util = require("lspconfig.util")
@@ -156,7 +164,7 @@ return {
 		-- ─────────────────────────── Mason + LSP Config ─────────────────────────
 		mason_lspconfig.setup({
 			ensure_installed = vim.tbl_keys(servers),
-			automatic_installation = true,
+			automatic_enable = false,
 		})
 
 		for name, opts in pairs(servers) do
@@ -164,6 +172,7 @@ return {
 			vim.lsp.config(name, opts)
 			vim.lsp.enable(name)
 		end
+
 
 		vim.lsp.config["tmux_ls"] = {
 			cmd = { "tmux-language-server" },

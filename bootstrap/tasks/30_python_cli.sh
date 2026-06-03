@@ -17,6 +17,10 @@ python_cli_task() {
     log "[python] black already installed: $(command -v black)"
   fi
 
+  log "[python] Installing luau-bridge dependencies..."
+  pip install flask pynvim --break-system-packages --quiet
+  chmod +x "$HOME/.config/nvim/lua/plugins/lsp/luau-bridge.py"
+
   log "[python] Done."
 }
 

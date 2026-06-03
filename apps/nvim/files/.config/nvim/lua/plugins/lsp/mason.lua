@@ -58,6 +58,9 @@ return {
 
 			-- XML
 			"xmlformatter",
+
+			-- Roblox / Luau
+			"luau-lsp",
 		},
 	},
 

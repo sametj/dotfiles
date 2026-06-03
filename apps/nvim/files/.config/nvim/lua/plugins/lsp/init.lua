@@ -5,4 +5,5 @@ return {
 	{ import = "plugins.lsp.roslyn" },
 	{ import = "plugins.lsp.dap-csharp" },
 	{ import = "plugins.lsp.neotest" },
+	{ import = "plugins.lsp.luau" },
 }
